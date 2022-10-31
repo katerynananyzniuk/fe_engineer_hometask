@@ -1,57 +1,46 @@
-# Apyon Frontend Engineer Homework
+# Getting Started with Create React App
 
-## Intro
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Welcome! At Apyon, we aim for composable, testable and scalable front-end code. This homework is the opportunity for you to showcase your skills in FE Engineering as you're free to choose any tools you want to work with within the React stack.
+## Available Scripts
 
-If you have any questions about the task itself or the technical tools (libraries and such) you'd like to use, feel free to reach out to us at any time.
+In the project directory, you can run:
 
-## Assignment
+### `npm start`
 
-Make a simple form that consists of 2 fields:
-1. Company code / ID
-2. Company name
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Make an integration with an API (or use fake Promise-based requests in FE), manage the form's state and form's field validation (in any way you want).
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### Business requirements
-1. Company code / ID field should have digits-only and 9 digits validation rules (according to Lithuania's company code pattern; example: `304254910`.
-2. When user correctly fills `Company code / ID` field, a request to the API should be made to GET company data by company ID; response should be mocked with a 3rd party API or your own very basic NodeJS MOCK API (use Express or anything else).
+### `npm test`
 
-### Technical requirements
-* Use a 3rd party tool to create a simple MOCK API (example of a 3rd party provider -> https://www.mockaroo.com/apis; or -> https://www.mocks-server.org/); or you can create a very basic Backend application that has 1 endpoint (example route: /api/company/all) that'd return hard-coded JSON response with random [or hardcoded] company data. (you can use any stack you want; NodeJS (Express) or anything else.)
-* Required to use: `react` and `react-dom`. The rest is up to your imagination.
-* Styling and UI component libraries: you're free to use anything you want (except plain CSS).
-* Use any libraries you see fit (for API integration, form state management, form validation and so on). You have complete freedom to show off your skills here.
-* Browser support: Chrome and Firefox (don't worry about Safari / Edge /Opera).
-* React Query (`react-query`) for API communication (recommended).
-* Typescript (recommended).
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Time
-Feel free to suggest how much time is needed to complete the task to a level that you're happy with. You have complete freedom here.
+### `npm run build`
 
-### Bonus points (optional)
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-If you have time, you can work on additional functionality for your app. It is a great way to showcase more of your skills! However, we *highly suggest* working on these only if the required functionality is implemented and you are confident with your solution. :)
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-* Form data submit (fake request in front-end or an actual Network request to your MOCK API)
-* Loading indicator for API requests
-* Responsive design (with 3 primary breakpoints — Desktop, Tablet, Phone (as a guideline, breakpoint values can be borrowed from MUI breakpoints; see: https://mui.com/material-ui/customization/breakpoints/)).
-* Saving user's form data somewhere in Browser (feel free to use anything you see fit)
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### Tips
-* There's no design available for this task. The form should be very straighforward, don't think too much about it.
-* Work on the fundamentals first (API integration etc.) and polish additional functionality later.
-* If you're short on time, consider using web app boilerplates that prepare code bundling, packaging for you.
-* Feel free to add `TODO`, `FIXME` and other commonly used notes in your code for various suggestions what could've been done better, but couldn't be done within the timeframe you have available.
-* Make sure your project runs in `dev` mode and builds for production (`dist` script in `package.json` or similar) (usually to `dist` directory in simple builds).
+### `npm run eject`
 
-### Submission
-There are 2 ways:
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-1. Create an unlisted, private or public repository with your project (on Github or Gitlab).
-2. Clone this repo and, when you're done, make a Pull Request.
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### Questions?
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-Got any questions? Feel free to ask.
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
