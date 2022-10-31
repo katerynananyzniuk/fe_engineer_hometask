@@ -13,11 +13,11 @@ function Company() {
   const [companyName, setCompanyName] = useState<string>('')
   const [companies, setCompanies] = useState<ICompany[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   const defaultValues = {
     company_id: ''
   }
-
 
   const { control, handleSubmit, formState: { errors } } = useForm<FormInputs>({
     defaultValues,
@@ -35,18 +35,23 @@ function Company() {
     try {
       
         setIsLoading(true)
+        setErrorMessage('')
         setCompanyName('')
         const response = await axios.get<ICompany>(`https://task-22da0-default-rtdb.europe-west1.firebasedatabase.app/companies/${id}.json`)
         const company = response.data
+        
+        const item = companies.find(item => JSON.stringify(item) === JSON.stringify(company))
+        if (item) {
+          const timeout = setTimeout(() => {
+            setCompanyName(company.name)
+            setIsLoading(false)
 
-        const timeout = setTimeout(() => {
-          setCompanyName(company.name)
+            clearTimeout(timeout)
+          }, 1000)
+        } else {
           setIsLoading(false)
-
-          clearTimeout(timeout)
-        }, 1000)
-
-      
+          setErrorMessage('Please enter the correct value of company ID')
+        }     
     } catch (error) {
       console.log(error, 'something went wrong!')
     }
@@ -87,7 +92,7 @@ function Company() {
             name='company_id'
             control={control}
             rules={{
-              required: 'CompanyId should be 6 digits'
+              required: 'Company ID should be 6 digits'
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <input
@@ -100,7 +105,7 @@ function Company() {
                 onChange={event => {
                   setCompanyId(event.target.value)
                 }}
-                placeholder="Enter company id..."
+                placeholder="Enter company ID..."
               />
             )}
           />
@@ -109,9 +114,16 @@ function Company() {
             companyId.length === 6
             ? null
             : <p
-                className="py-4 mb-4 text-sm text-red-700"
-              >{errors.company_id?.message}</p>}
+                className="py-4 text-sm text-red-700"
+              >{errors.company_id?.message}</p>
+          }
           
+          {
+            errorMessage && 
+            <p
+              className="py-4 text-sm text-red-700"
+            >{errorMessage}</p>
+          }
           <div
             className="mt-2"
           >Company name:&nbsp;
