@@ -1,11 +1,13 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { ICompany } from "../../models"
+import { Loader } from "../Loader/Loader"
 
 function Company() {
   const [companyId, setCompanyId] = useState<string>('')
   const [companyName, setCompanyName] = useState<string>('')
   const [companies, setCompanies] = useState<ICompany[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchCompanies = async () => {
     const response = await axios.get<ICompany[]>('https://task-22da0-default-rtdb.europe-west1.firebasedatabase.app/companies.json')
@@ -27,13 +29,13 @@ function Company() {
     }
   }
   
-    useEffect(() => {
-      try {
-        fetchCompanies()
-      } catch (error) {
-        console.log(error, 'something went wrong!')
-      }
-    },[])
+  useEffect(() => {
+    try {
+      fetchCompanies()
+    } catch (error) {
+      console.log(error, 'something went wrong!')
+    }
+  },[])
 
   useEffect(() => {
     try {
@@ -48,23 +50,30 @@ function Company() {
   }
 
   return (
-    <div className="border py-8 px-4 mx-8 rounded flex flex-col items-center">
-      <form onSubmit={submitHandler}>
-        <label htmlFor="company_id">Company ID:&nbsp;</label>
-        <input 
-          className="border"
-          id="company_id"
-          type="text"
-          value={companyId}
-          onChange={event => setCompanyId(event.target.value)}
-          placeholder="Enter company id..."
-        />
-        <div
-          className="mt-2"
-        >Company name:&nbsp;
-          {companyName}
-        </div>
-      </form>
+    <div className="border py-8 px-4 mx-8 rounded flex flex-wrap">
+      <div className="py-8 px-4 mx-8 flex flex-col items-center">
+        <form onSubmit={submitHandler}>
+          <label htmlFor="company_id">Company ID:&nbsp;</label>
+          <input 
+            className="border"
+            id="company_id"
+            type="text"
+            value={companyId}
+            onChange={event => setCompanyId(event.target.value)}
+            placeholder="Enter company id..."
+          />
+          <div
+            className="mt-2"
+          >Company name:&nbsp;
+            {companyName}
+          </div>
+        </form>
+      </div>
+      {
+        isLoading
+          ? <Loader />
+          : null
+      }
     </div>
   )
 }
