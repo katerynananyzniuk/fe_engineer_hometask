@@ -2,27 +2,25 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { ICompany } from "../../models"
 import { Loader } from "../Loader/Loader"
-import { Controller, DefaultValues, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 type FormInputs = {
   company_id: string;
 };
 
 function Company() {
-  const [companyId, setCompanyId] = useState<string>('')
   const [companyName, setCompanyName] = useState<string>('')
   const [companies, setCompanies] = useState<ICompany[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string>('')
 
-  const defaultValues = {
-    company_id: ''
-  }
-
-  const { control, handleSubmit, formState: { errors } } = useForm<FormInputs>({
-    defaultValues,
+  const { register, watch, handleSubmit, formState: { errors } } = useForm<FormInputs>({
     mode: 'onBlur',
-  });
+    defaultValues: {
+      company_id: ""
+    }
+  })
+
+  const { company_id } = watch()
 
   const fetchCompanies = async () => {
     const response = await axios.get<ICompany[]>('https://task-22da0-default-rtdb.europe-west1.firebasedatabase.app/companies.json')
@@ -35,7 +33,6 @@ function Company() {
     try {
       
         setIsLoading(true)
-        setErrorMessage('')
         setCompanyName('')
         const response = await axios.get<ICompany>(`https://task-22da0-default-rtdb.europe-west1.firebasedatabase.app/companies/${id}.json`)
         const company = response.data
@@ -50,7 +47,6 @@ function Company() {
           }, 1000)
         } else {
           setIsLoading(false)
-          setErrorMessage('Please enter the correct value of company ID')
         }     
     } catch (error) {
       console.log(error, 'something went wrong!')
@@ -67,8 +63,8 @@ function Company() {
 
   useEffect(() => {
     try {
-      if (companyId.length === 6) {
-        fetchCompany(companyId)
+      if (company_id.length === 6) {
+        fetchCompany(company_id)
       } else {
         setIsLoading(false)
         setCompanyName('')
@@ -76,54 +72,53 @@ function Company() {
     } catch (error) {
       console.log(error, 'something went wrong!')
     }
-  },[companyId])
+  },[company_id])
   
   const submitHandler = (event: any) => {
     event.preventDefault()
   }
   
   return (
-    <div className="border py-8 px-4 mx-8 rounded flex flex-wrap">
-      <div className="py-8 px-4 mx-8 flex flex-col items-center">
-        <form onSubmit={handleSubmit(submitHandler)}>
-          <label htmlFor="company_id">Company ID:&nbsp;</label>
-          
-          <Controller
-            name='company_id'
-            control={control}
-            rules={{
-              required: 'Company ID should be 6 digits'
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <input
-                onBlur={onBlur}
-                name="company_id"
-                className="border"
-                id="company_id"
-                type="text"
-                value={companyId}
-                onChange={event => {
-                  setCompanyId(event.target.value)
-                }}
-                placeholder="Enter company ID..."
-              />
-            )}
-          />
+    <div className="border py-8 px-4 mx-8 rounded flex flex-wrap min-w-fit text-center">
+      <div className="flex flex-col text-left">
+        <form 
+          className="gap-5"
+          onSubmit={handleSubmit(submitHandler)}
+        >
 
-          {
-            companyId.length === 6
-            ? null
-            : <p
-                className="py-4 text-sm text-red-700"
-              >{errors.company_id?.message}</p>
-          }
-          
-          {
-            errorMessage && 
+          <label htmlFor="company_id">Company ID:&nbsp;
+            
+            <input
+              id="company_id"
+              placeholder="Enter company Id..."
+              className="border mx-2 my-1 px-2"
+              {...register(
+                "company_id", 
+                { 
+                  required: "Company ID is required.",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Company ID should contains digits only."
+                  },
+                  maxLength: {
+                    value: 6,
+                    message: "Company ID should be maximum 6 digits."
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Company ID should be minimum 6 digits."
+                  }
+                },
+              )}
+            />
+          </label>
+
+          { errors?.company_id?.message && (
             <p
               className="py-4 text-sm text-red-700"
-            >{errorMessage}</p>
-          }
+            >{errors.company_id?.message}</p>
+          )}
+          
           <div
             className="mt-2"
           >Company name:&nbsp;
