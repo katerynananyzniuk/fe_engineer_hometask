@@ -126,7 +126,7 @@ function Company() {
           
           <div className="mt-2">
             Company name:&nbsp;
-            {companyName}
+            <span className="font-bold mx-1">{companyName}</span>
           </div>
 
         </form>
@@ -137,7 +137,7 @@ function Company() {
           ? <Loader />
           : null
       }
-      
+
     </div>
   )
 }
