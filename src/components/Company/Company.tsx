@@ -24,7 +24,7 @@ function Company() {
   const { company_id } = watch()
 
   const fetchCompanies = async () => {
-    const response = await axios.get<ICompany[]>('https://task-22da0-default-rtdb.europe-west1.firebasedatabase.app/companies.json')
+    const response = await axios.get<ICompany[]>('https://project-c5b0b-default-rtdb.europe-west1.firebasedatabase.app/companies.json')
     const companies = Object.values(response.data)
     
     setCompanies(companies)
@@ -35,7 +35,7 @@ function Company() {
       
         setIsLoading(true)
         setCompanyName('')
-        const response = await axios.get<ICompany>(`https://task-22da0-default-rtdb.europe-west1.firebasedatabase.app/companies/${id}.json`)
+        const response = await axios.get<ICompany>(`https://project-c5b0b-default-rtdb.europe-west1.firebasedatabase.app/companies/${id}.json`)
         const company = response.data
         
         const item = companies.find(item => JSON.stringify(item) === JSON.stringify(company))
@@ -80,8 +80,8 @@ function Company() {
   }
   
   return (
-    <div className="bg-gray-50 border border-slate-400 py-8 px-6 mx-6 rounded flex flex-wrap min-w-fit text-center">
-      <div className="flex flex-col text-left">
+    <div className="bg-gray-50 border border-slate-400 py-8 px-6 mx-6 rounded flex flex-wrap text-center">
+      <div className="flex flex-col justify-center h-24 text-left">
         <form onSubmit={handleSubmit(submitHandler)}>
 
           <label htmlFor="company_id">Company ID:&nbsp;</label>
@@ -111,7 +111,7 @@ function Company() {
           />
 
           <div className="inline-flex">
-            <Tooltip content="Number is 6 digits between 111111 and 111136" style="light" placement="right">
+            <Tooltip content="Number is 6 digits between 111111 and 111116" style="light" placement="right">
               <svg className="w-4 h-4 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
               </svg>
